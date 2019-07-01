@@ -10,6 +10,6 @@ curl $DOMAIN/api/v1.1/project/$VCS/$USERNAME/$PROJECT/$1/artifacts?circle-token=
 
 <artifacts.txt xargs -P4 -I % wget %?circle-token=$CIRCLE_TOKEN
 
-find . -type f -name '*?circle-token=a37023657781ad1a5eefe0731b03d37cf8573818' | while read f; do mv "$f" "${f%?circle-token=a37023657781ad1a5eefe0731b03d37cf8573818}"; done
+find . -type f -name '*?circle-token=$CIRCLE_TOKEN' | while read f; do mv "$f" "${f%?circle-token=$CIRCLE_TOKEN}"; done
 
 rm artifacts.txt
