@@ -4,19 +4,17 @@ DOMAIN=https://circleci.com
 VCS=github
 USERNAME=YourUserName
 PROJECT=YourProjectName
-CIRCLE_TOKEN='YourCircleCIToken'
+export CIRCLE_TOKEN='YourCircleCIToken'
 
-function mywget()
+function mycurl()
 {
-     wget -O ${2##*/} "$2?circle-token=$1"
+     curl -o ${2##*/circleci/project/} "$2?circle-token=$1" --create-dirs
 }
 
-export -f mywget
+export -f mycurl
 
 curl $DOMAIN/api/v1.1/project/$VCS/$USERNAME/$PROJECT/$1/artifacts?circle-token=$CIRCLE_TOKEN | grep -o 'https://[^"]*' > artifacts.txt
 
-<artifacts.txt xargs -P4 -I {} bash -c 'mywget $CIRCLE_TOKEN "{}"'
-
-find . -type f -name "*?circle-token=$CIRCLE_TOKEN" | while read f; do mv "$f" "${f%?circle-token=$CIRCLE_TOKEN}"; done
+<artifacts.txt xargs -P4 -I {} bash -c 'mycurl $CIRCLE_TOKEN "{}"'
 
 rm artifacts.txt
