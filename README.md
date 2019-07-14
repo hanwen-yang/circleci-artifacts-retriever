@@ -1,5 +1,5 @@
 # Circleci Artifacts Retriever
-A shell script to retrieve CircleCI artifacts by build number
+A shell script to retrieve CircleCI artifacts by build number while retaining the artifacts folder structure.
 
 ## How to use
 Open getReports.sh and fill in details for the below arguments:
